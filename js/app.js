@@ -56,8 +56,6 @@ var Calculadora = (function(){
         }    
     }
     
-    /*return{
-            init: function (){*/
         
     // inicio a imprimir el numero en pantalla
 
@@ -238,10 +236,16 @@ var Calculadora = (function(){
                 }
             }
             
+            var inicializar = function(){
+                operacion();
+            }
 
         // Manejo de metodos
 
             return{
+
+                init: inicializar ,
+
                 suma: function(){
                     if (display == resultado) {
                         cifra2=cifig;
@@ -308,3 +312,5 @@ var Calculadora = (function(){
                 }
             }            
 })();
+
+Calculadora.init();
