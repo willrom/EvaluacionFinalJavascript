@@ -1,14 +1,29 @@
 var Calculadora = (function(){
     
     var display= document.getElementById("display").innerHTML;
-
     var numdig=1;
     var punto=0;
     var cifra1=0;
     var cifra2=0;
+    var cifig=0;
     var op="";
+    var op2="";
     var resultado=0;
     var resul="";
+
+// se guarda en una variable el objeto o elemento en el que se dio click
+
+    var btn0=document.getElementById("0");
+    var btnon=document.getElementById("on");
+    var btnsign=document.getElementById("sign");
+    var btndiv=document.getElementById("dividido");
+    var btnmenos=document.getElementById("menos");
+    var btnpor=document.getElementById("por");
+    var btnpunto=document.getElementById("punto");
+    var btnigual=document.getElementById("igual");
+    var btnmas=document.getElementById("mas");
+
+// Se obpiene el numero del id para el manejo de los numeros en pantalla
 
     document.addEventListener("mouseup",function(e){
         var id = e.target.id;
@@ -42,27 +57,8 @@ var Calculadora = (function(){
     }
     
     /*return{
-        init: function (){*/
-        // se guarda en una variable el objeto o elemento en el que se dio click
-            var btn0=document.getElementById("0");
-            /*var btn1=document.getElementById("1");
-            var btn2=document.getElementById("2");
-            var btn3=document.getElementById("3");
-            var btn4=document.getElementById("4");
-            var btn5=document.getElementById("5");
-            var btn6=document.getElementById("6");
-            var btn7=document.getElementById("7");
-            var btn8=document.getElementById("8");
-            var btn9=document.getElementById("9");*/
-            var btnon=document.getElementById("on");
-            var btnsign=document.getElementById("sign");
-            var btndiv=document.getElementById("dividido");
-            var btnmenos=document.getElementById("menos");
-            var btnpor=document.getElementById("por");
-            var btnpunto=document.getElementById("punto");
-            var btnigual=document.getElementById("igual");
-            var btnmas=document.getElementById("mas");
-
+            init: function (){*/
+        
     // inicio a imprimir el numero en pantalla
 
             btn0.onmousedown= function(){
@@ -78,7 +74,7 @@ var Calculadora = (function(){
                 }
             }
 
-        // uso de los botones numericos
+    // uso de los botones numericos
 
             document.addEventListener("mousedown", function(e){
                 var id = e.target.id;
@@ -150,7 +146,7 @@ var Calculadora = (function(){
                 }
             }
 
-        // uso del boton multiplicacion (*)
+        // uso del boton multiplicacion (X)
         
             btnpor.onmousedown= function (){
                 btnpor.style.transform = "scale(0.9)";
@@ -208,15 +204,25 @@ var Calculadora = (function(){
 
             btnigual.onmousedown= function (){
                 btnigual.style.transform = "scale(0.9)";
-                if (display!="0") {
-                    if (op != "") {
-                        operacion(op);
-                        resul=resultado.toString();
-                        //resultado=resultado.lenhgt(8);
-                        document.getElementById("display").innerHTML = Calculadora.mostrar();
-                        display=document.getElementById("display").innerHTML;
-                        cifra2 = "";
-                        op="";
+                if (display!="") {
+                    if (display!="0") {
+                        if (op != "" || op2 != "") {
+                            if (display == resultado) {
+                                op = op2;
+                                cifra2=cifig;
+                                operacion(op);
+                                resul=resultado.toString();
+                                document.getElementById("display").innerHTML = Calculadora.mostrar();
+                                display=document.getElementById("display").innerHTML;
+                                op="";
+                            } else {
+                                operacion(op);
+                                resul=resultado.toString();
+                                document.getElementById("display").innerHTML = Calculadora.mostrar();
+                                display=document.getElementById("display").innerHTML;
+                                op="";    
+                            }
+                        }
                     }
                 }
             }
@@ -237,43 +243,68 @@ var Calculadora = (function(){
 
             return{
                 suma: function(){
-                    cifra2=document.getElementById("display").innerHTML;
+                    if (display == resultado) {
+                        cifra2=cifig;
+                    } else{
+                        cifra2=document.getElementById("display").innerHTML;
+                    }
                     cifra1=parseFloat(cifra1);
                     cifra2=parseFloat(cifra2);
                     resultado=cifra1+cifra2;
                     cifra1=resultado;
+                    cifig = cifra2;
+                    op2 = op;
                     cifra2="";   
                 },
 
                 multiplicacion: function(){
-                    cifra2=document.getElementById("display").innerHTML;
+                    if (display == resultado) {
+                        cifra2=cifig;
+                    } else{
+                        cifra2=document.getElementById("display").innerHTML;
+                    }
                     cifra1=parseFloat(cifra1);
                     cifra2=parseFloat(cifra2);
                     resultado=cifra1*cifra2;
                     cifra1=resultado;
+                    cifig = cifra2;
+                    op2 = op;
                     cifra2="";   
                 },
 
                 divicion: function(){
-                    cifra2=document.getElementById("display").innerHTML;
+                    if (display == resultado) {
+                        cifra2=cifig;
+                    } else{
+                        cifra2=document.getElementById("display").innerHTML;
+                    }
                     cifra1=parseFloat(cifra1);
                     cifra2=parseFloat(cifra2);
                     resultado=cifra1/cifra2;
                     cifra1=resultado;
+                    cifig = cifra2;
+                    op2 = op;
                     cifra2="";   
                 },
 
                 resta: function(){
-                    cifra2=document.getElementById("display").innerHTML;
+                    if (display == resultado) {
+                        cifra2=cifig;
+                    } else{
+                        cifra2=document.getElementById("display").innerHTML;
+                    }
                     cifra1=parseFloat(cifra1);
                     cifra2=parseFloat(cifra2);
                     resultado=cifra1-cifra2;
                     cifra1=resultado;
+                    cifig = cifra2;
+                    op2 = op;
                     cifra2="";   
                 },
 
                 mostrar: function () {
                     return resul.substr(0,8);
+                    
                 }
             }            
 })();
